@@ -58,7 +58,7 @@ def get_keyword(index):
 
 def import_page(keywords,page_number):
 	url=url_start+keywords+url_second+str(page_number)+url_middle+keywords+url_finish
-	print url
+	#print url
 	raw_page = urllib.urlopen(url)
 	raw_page = raw_page.read()
 	return raw_page
@@ -73,6 +73,7 @@ def grab_ASINs(raw_page,start,threshold):
 	review_end= '</a>'
 	Products=[]
 	index=start
+	#
 	print"enter loop"
 	while count<24:
 		index=raw_page.find(start_mark,index)
@@ -101,7 +102,7 @@ def grab_ASINs(raw_page,start,threshold):
 def get_search_review(search_index,product_list):
 	keyword= get_keyword(search_index)
 	print keyword
-	for i in range(5):
+	for i in range(400):
 		raw_page=import_page(keyword,i)
 		if raw_page.find("did not match any products.")!=-1:
 			break
@@ -111,16 +112,17 @@ def get_search_review(search_index,product_list):
 
 def main():
 	product_list=[]
-	output= open('ASINList.txt','w')
-	for i in range(len(keyword_list)):
-		product_list=get_search_review(i,product_list)
-	for i in range(len(product_list)):
-		for j in product_list[i]:
-			output.write(j+",")
-		output.write('\n')
-	print len(product_list)
+	with open('ASINList.txt','w') as output:
+		for i in range(len(keyword_list)):
+			product_list=get_search_review(i,product_list)
+		for i in range(len(product_list)):
+			for j in product_list[i]:
+				output.write(j+",")
+			output.write('\n')
+		print len(product_list)
+		output.close()
 
-	output.close()
+	
 
 
 main()
