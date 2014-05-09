@@ -142,21 +142,20 @@ def grab_reviews(my_reviews, start_mark, finish_mark):
 	return text
 
 def parse_reviews(review_text,check_list,ages):
-
+	age = []
 	for i in range(len(review_text)):
 		for key in check_list:
 			if review_text[i].find(key) >=0:
-				ages.append(int(check_list[key]))
+				age.append(int(check_list[key]))
 				break
-	return ages
+
+	return age
 
 def sort_ages(ages):
 	ages_count=[0]*18
 	ages.sort()
 	for i in ages:
-		for j in range(14):
-			if (i)==j:
-				ages_count[j]+=1
+		ages_count[i]+=1
 	return ages_count
 
 
@@ -170,7 +169,7 @@ def main(ASIN_list):
 			my_reviews = urllib.urlopen(review_url)
 			my_reviews = my_reviews.read()
 			review_text = grab_reviews(my_reviews,start_mark,finish_mark)
-			ages.append(parse_reviews(review_text,check_list,ages))
+			ages = ages+ parse_reviews(review_text,check_list,ages)
 		break_down = sort_ages(ages)
 		final_output[j]=break_down
 		print ages
