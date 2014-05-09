@@ -107,12 +107,14 @@ def get_search_review(search_index,product_list):
 		if raw_page.find("did not match any products.")!=-1:
 			break
 		print i
-		product_list=product_list+grab_ASINs(raw_page,0,30) #contains product list for the page, 30 is thresh
+
+		#contains product list for the page, 30 is thresh
+		product_list=product_list+grab_ASINs(raw_page,0,30) 
 	return product_list
 
 def main():
 	product_list=[]
-	with open('ASINList.txt','w') as output:
+	with open('ASINList_temp.txt','w') as output:
 		for i in range(len(keyword_list)):
 			product_list=get_search_review(i,product_list)
 		for i in range(len(product_list)):
