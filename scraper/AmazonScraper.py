@@ -1286,6 +1286,7 @@ def sort_ages(ages):
 
 
 def main():
+	print_index =0
 	#[[name ,ASIN,review_count]]
 	ASIN_list= grab_ASINs() 
 	with open('../data/name_ASIN_rcount_ages.txt','w') as output:
@@ -1297,7 +1298,6 @@ def main():
 			else:
 				adjusted_review_count= int(j[2])/10
 			for i in range(adjusted_review_count):
-				print i
 				review_url = first_review_url+j[1]+middle_review_url+str(i+1)+last_review_url
 				my_reviews = urllib.urlopen(review_url)
 				my_reviews = my_reviews.read()
@@ -1313,6 +1313,8 @@ def main():
 				out = out + str(each)+ " "
 			out = out + "\n"
 			output.write(out)
+			print print_index
+			print_index +=1
 			#print ages
 
 	
