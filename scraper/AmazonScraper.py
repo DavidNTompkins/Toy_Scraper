@@ -4,7 +4,6 @@ first_review_url = "http://www.amazon.com/product-reviews/"
 middle_review_url = "/ref=cm_cr_pr_top_link_next_2?ie=UTF8&filterBy=addFiveStar&pageNumber="
 last_review_url = "&showViewpoints=0&sortBy=bySubmissionDateDescending"
 
-ASIN_list= ["B00A8UT562","B00A8UT55I","B00A8UT5TY","B00A8UT558"]
 
 check_list = {'5-year-old':5,
 'Grandchildren ages 2, 3, 4 & 5':2,
@@ -121,6 +120,17 @@ check_list = {'5-year-old':5,
 start_mark = '<div class="reviewText">'
 finish_mark = '<div style="padding-top: 10px; clear: both; width: 100%;">'
 
+def grab_ASINs():
+	ASIN_list=[]
+	with open('../data/ASINListClean.txt','r') as ASINList:
+		ASINs_raw = ASINList.readlines()
+		ASINs_raw = list(set(ASINs_raw))
+		for i in ASINs_raw:
+			i = i[:(len(i)-2)]
+			ASIN_list.append(i.split(','))
+
+	return ASIN_list
+
 
 def grab_reviews(my_reviews, start_mark, finish_mark):
 	start = 0
@@ -181,7 +191,7 @@ def main(ASIN_list):
 	#print float(sum(final_output["B00A8UT55I"]))/float(len(final_output["B00A8UT55I"]))
 	#print float(sum(final_output["B00A8UT5TY"]))/float(len(final_output["B00A8UT5TY"]))
 	#print float(sum(final_output["B00A8UT558"]))/float(len(final_output["B00A8UT558"]))
-main(ASIN_list)
+
 
 
 
