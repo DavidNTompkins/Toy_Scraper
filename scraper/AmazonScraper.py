@@ -1288,7 +1288,7 @@ def sort_ages(ages):
 def main():
 	#[[name ,ASIN,review_count]]
 	ASIN_list= grab_ASINs() 
-	with open('name_ASIN_rcount_ages.txt','w') as output:
+	with open('../data/name_ASIN_rcount_ages.txt','w') as output:
 		for j in ASIN_list:
 			ages =[]
 			remainder=int(j[2])%10
