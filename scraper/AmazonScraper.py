@@ -159,29 +159,31 @@ def sort_ages(ages):
 	return ages_count
 
 
-def main(ASIN_list):
-	final_output = {}
+def main():
 	#[[name ,ASIN,review_count]]
 	ASIN_list= grab_ASINs() 
-	for j in ASIN_list:
-		ages =[]
-		for i in range(28): # should be review_count/10
-			review_url = first_review_url+j+middle_review_url+str(i)+last_review_url
-			#print "1"
-			my_reviews = urllib.urlopen(review_url)
-			my_reviews = my_reviews.read()
-			review_text = grab_reviews(my_reviews,start_mark,finish_mark)
-			ages = ages+ parse_reviews(review_text,check_list,ages)
-		break_down = sort_ages(ages)
-		final_output[j]=break_down
-		print ages
-	print final_output
+	with open('name_ASIN_rcount_ages.txt','w') as output:
+		for j in ASIN_list:
+			ages =[]
+			adjusted_review_count = j[2] / 10
+			for i in range(adjusted_review_count):
+				review_url = first_review_url+j+middle_review_url+str(i)+last_review_url
+				#print "1"
+				my_reviews = urllib.urlopen(review_url)
+				my_reviews = my_reviews.read()
+				review_text = grab_reviews(my_reviews,start_mark,finish_mark)
+				ages = ages+ parse_reviews(review_text,check_list,ages)
+			break_down = sort_ages(ages)
+			output.write(j[0]+","+j[1]+","+j[2]+","+break_down)
+			#print ages
+
 	
 	#print float(sum(final_output["B00A8UT562"]))/float(len(final_output["B00A8UT562"]))
 	#print float(sum(final_output["B00A8UT55I"]))/float(len(final_output["B00A8UT55I"]))
 	#print float(sum(final_output["B00A8UT5TY"]))/float(len(final_output["B00A8UT5TY"]))
 	#print float(sum(final_output["B00A8UT558"]))/float(len(final_output["B00A8UT558"]))
-main(ASIN_list)
+
+main()
 
 
 
