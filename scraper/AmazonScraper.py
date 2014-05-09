@@ -130,7 +130,7 @@ def grab_reviews(my_reviews, start_mark, finish_mark):
 	point = 0
 	text =[]
 
-	while point <10:
+	while point <10: #should be number of reviews on page, diff for final page
 		start = my_reviews.find(start_mark,start+1)
 		finish = my_reviews.find(finish_mark,finish+1)
 		starts.append(start+len(start_mark))
@@ -161,9 +161,11 @@ def sort_ages(ages):
 
 def main(ASIN_list):
 	final_output = {}
+	#[[name ,ASIN,review_count]]
+	ASIN_list= grab_ASINs() 
 	for j in ASIN_list:
 		ages =[]
-		for i in range(28):
+		for i in range(28): # should be review_count/10
 			review_url = first_review_url+j+middle_review_url+str(i)+last_review_url
 			#print "1"
 			my_reviews = urllib.urlopen(review_url)
