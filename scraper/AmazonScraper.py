@@ -1238,7 +1238,7 @@ finish_mark = '<div style="padding-top: 10px; clear: both; width: 100%;">'
 
 def grab_ASINs():
 	ASIN_list=[]
-	with open('../data/ASINListSmallClean.txt','r') as ASINList:
+	with open('../data/ASINListSmallCleanDavid.txt','r') as ASINList:
 		ASINs_raw = ASINList.readlines()
 		ASINs_raw = list(set(ASINs_raw))
 		for i in ASINs_raw:
@@ -1289,7 +1289,7 @@ def main():
 	print_index =0
 	#[[name ,ASIN,review_count]]
 	ASIN_list= grab_ASINs() 
-	with open('../data/name_ASIN_rcount_ages.txt','w') as output:
+	with open('../data/name_ASIN_rcount_ages_David.txt','w') as output:
 		for j in ASIN_list:
 			ages =[]
 			remainder=int(j[2])%10
