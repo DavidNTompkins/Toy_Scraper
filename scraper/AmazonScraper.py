@@ -1238,7 +1238,7 @@ finish_mark = '<div style="padding-top: 10px; clear: both; width: 100%;">'
 
 def grab_ASINs():
 	ASIN_list=[]
-	with open('../data/ASINListSmallCleanDavid.txt','r') as ASINList:
+	with open('../data/ASINListCleanAlex.txt','r') as ASINList:
 		ASINs_raw = ASINList.readlines()
 		ASINs_raw = list(set(ASINs_raw))
 		for i in ASINs_raw:
@@ -1289,7 +1289,7 @@ def main():
 	print_index =0
 	#[[name ,ASIN,review_count]]
 	ASIN_list= grab_ASINs() 
-	with open('../data/name_ASIN_rcount_ages_David.txt','w') as output:
+	with open('../data/name_ASIN_rcount_ages_Alex.txt','w') as output:
 		for j in ASIN_list:
 			ages =[]
 			remainder=int(j[2])%10
@@ -1299,7 +1299,13 @@ def main():
 				adjusted_review_count= int(j[2])/10
 			for i in range(adjusted_review_count):
 				review_url = first_review_url+j[1]+middle_review_url+str(i+1)+last_review_url
-				my_reviews = urllib.urlopen(review_url)
+				my_reviews = None
+				for i in range(50):
+					try:
+						my_reviews = urllib.urlopen(review_url)
+						break
+					except IOError:
+						print("Failed:  Attempting to reopen page")
 				my_reviews = my_reviews.read()
 				if (i+1)>(int(j[2])/10):
 					num_reviews=remainder
